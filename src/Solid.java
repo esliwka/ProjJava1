@@ -1,12 +1,19 @@
-public class Solid {
-    private String type;
+public abstract class Solid {
 
-    public Solid(String thing) {
-        super();
-        this.type = thing;
+    private String name;
+    public abstract double getVolume();
+    public abstract double getArea();
+
+    public String getName() {
+        return name;
+    }
+    protected void setName(String name) {
+        this.name = name;
     }
 
-    public String getType() {
-        return type;
+    @Override
+    public String toString() {
+        return name+" "+getArea()+" "+getVolume();
     }
+
 }
