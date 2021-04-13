@@ -10,3 +10,4 @@ public class Solid {
         return type;
     }
 }
+// ok
