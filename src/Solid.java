@@ -13,7 +13,7 @@ public abstract class Solid {
 
     @Override
     public String toString() {
-        return name+" "+getArea()+" "+getVolume();
+        return name+" PP = "+getArea()+" V = "+getVolume();
     }
 
 }

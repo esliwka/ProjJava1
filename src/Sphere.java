@@ -9,7 +9,7 @@ public class Sphere extends Solid {
 
     @Override
     public double getVolume() {
-        return 4/3*Math.PI*Math.pow(r,3);
+        return 4*Math.PI*Math.pow(r,3)/3;
     }
     @Override
     public double getArea() {

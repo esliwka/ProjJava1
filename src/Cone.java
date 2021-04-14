@@ -13,7 +13,7 @@ public class Cone extends Solid {
 
     @Override
     public double getVolume() {
-        return 1/3*Math.PI*r*l*h;
+        return Math.PI*r*l*h/3;
     }
     @Override
     public double getArea() {
