@@ -21,15 +21,13 @@ public class MainClass {
         // Solid s4 = new Cylinder(2,5);
         // Solid s5 = new Sphere(10);
         // System.out.println(s1.toString());
-        // System.out.println(s2.toString());
-        // System.out.println(s3.toString());
-        // System.out.println(s4.toString());
-        // System.out.println(s5.toString());
 
         Scanner sc = new Scanner(f);
-        Solid s1 = new Cuboid(0,0,0);
-        s1.parseLine(sc);
-        System.out.println(s1.toString());
+        while(sc.hasNextLine()){
+            Solid s1 = new Cuboid();
+            s1.parseLine(sc);
+            System.out.println(s1.toString());
+        }
 
     }
 

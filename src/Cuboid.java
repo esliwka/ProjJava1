@@ -7,6 +7,10 @@ public class Cuboid extends Solid {
     private double b;
     private double h;
 
+    public Cuboid() {
+        setName("Prostopadloscian");
+    }
+
     public Cuboid(double a, double b, double h) {
         this.a = a;
         this.b = b;
