@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public abstract class Solid {
 
     private String name;
@@ -10,6 +12,8 @@ public abstract class Solid {
     protected void setName(String name) {
         this.name = name;
     }
+
+    public abstract void parseLine(Scanner sc);
 
     @Override
     public String toString() {
