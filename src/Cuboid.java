@@ -18,7 +18,7 @@ public class Cuboid extends Solid {
         setName("Prostopadloscian");
     }
 
-    public void parseLine(Scanner sc){
+    public void parseLine(Scanner sc) throws ZeroException, NegativeException{
         String line = sc.nextLine();
         StringTokenizer st = new StringTokenizer(line);
         String t1,t2,t3;
@@ -28,6 +28,8 @@ public class Cuboid extends Solid {
         a = Double.parseDouble(t1);
         b = Double.parseDouble(t2);
         h = Double.parseDouble(t3);
+        if(a==0 || b==0 || h==0) throw new ZeroException();
+        if(a<0 || b<0 || h<0) throw new NegativeException();
     }
 
     public void setA(double a) {

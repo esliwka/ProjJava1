@@ -15,7 +15,7 @@ public abstract class Solid {
         this.name = name;
     }
 
-    public abstract void parseLine(Scanner sc);
+    public abstract void parseLine(Scanner sc) throws ZeroException, NegativeException;
     public void saveToFile(String str, PrintWriter pw) throws FileNotFoundException{
         pw.println(str);
         pw.flush();
@@ -26,4 +26,16 @@ public abstract class Solid {
         return name+" PP = "+getArea()+" V = "+getVolume();
     }
 
+}
+
+class ZeroException extends Exception {
+    public ZeroException(){
+        super("Wykryto zmienne zerowe");
+    }
+}
+
+class NegativeException extends Exception {
+    public NegativeException(){
+        super("Wykryto zmienne ujemne");
+    }
 }
