@@ -30,6 +30,18 @@ public class Cuboid extends Solid {
         h = Double.parseDouble(t3);
     }
 
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
     @Override
     public double getVolume() {
         return a*b*h;

@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public abstract class Solid {
@@ -14,6 +16,10 @@ public abstract class Solid {
     }
 
     public abstract void parseLine(Scanner sc);
+    public void saveToFile(String str, PrintWriter pw) throws FileNotFoundException{
+        pw.println(str);
+        pw.flush();
+    }
 
     @Override
     public String toString() {

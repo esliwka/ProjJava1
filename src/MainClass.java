@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class MainClass {
@@ -7,7 +8,8 @@ public class MainClass {
     public static void main(String[] args) throws FileNotFoundException {
 
         // input file
-        File f = new File("src\\input.dat");
+        File fin = new File("src\\input.dat");
+        File fout = new File("src\\output.dat");
 
         // try(Scanner sc = new Scanner(f)) {
             
@@ -15,18 +17,19 @@ public class MainClass {
         //     //TODO: handle exception
         // }
         
-        // Solid s1 = new Cone(2, 3, 4);
-        // Solid s2 = new Cube(5);
-        // Solid s3 = new Cuboid(2, 3, 4);
-        // Solid s4 = new Cylinder(2,5);
-        // Solid s5 = new Sphere(10);
-        // System.out.println(s1.toString());
+        // Cone 3 arguments
+        // Cube 1
+        // Cuboid 3
+        // Cylinder 2
+        // Sphere 1
 
-        Scanner sc = new Scanner(f);
+        Scanner sc = new Scanner(fin);
+        PrintWriter pw = new PrintWriter(fout);
         while(sc.hasNextLine()){
             Solid s1 = new Cuboid();
             s1.parseLine(sc);
             System.out.println(s1.toString());
+            s1.saveToFile(s1.toString(), pw);
         }
 
     }

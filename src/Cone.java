@@ -1,14 +1,33 @@
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
 public class Cone extends Solid {
     
     private double r;
     private double h;
     private double l;
 
+    public Cone() {
+        setName("Stozek");
+    }
+
     public Cone(double r, double h, double l) {
         this.r = r;
         this.h = h;
         this.l = l;
         setName("Stozek");
+    }
+
+    public void parseLine(Scanner sc){
+        String line = sc.nextLine();
+        StringTokenizer st = new StringTokenizer(line);
+        String t1,t2,t3;
+        t1 = st.nextToken();
+        t2 = st.nextToken();
+        t3 = st.nextToken();
+        r = Double.parseDouble(t1);
+        h = Double.parseDouble(t2);
+        l = Double.parseDouble(t3);
     }
 
     @Override
