@@ -4,25 +4,31 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class MainClass {
-    
+
     public static void main(String[] args) throws FileNotFoundException,ZeroException,NegativeException {
 
         // input file
         File fin = new File("src\\input.dat");
         File fout = new File("src\\output.dat");
-
-        try {
-            Scanner sc = new Scanner(fin);
+        Solid s1;
+        try (Scanner sc = new Scanner(fin)) {
             PrintWriter pw = new PrintWriter(fout);
             try {
                 while (sc.hasNextLine()) {
-                    Solid s1 = new Cuboid();
+                    String solidType = sc.next();
+                    s1 = switch (solidType) {
+                        case "Cuboid" -> new Cuboid();
+                        case "Cube" -> new Cube();
+                        case "Cone" -> new Cone();
+                        case "Cylinder" -> new Cylinder();
+                        case "Sphere" -> new Sphere();
+                        default -> throw new IllegalStateException("Unexpected value: " + solidType);
+                    };
                     s1.parseLine(sc);
                     System.out.println(s1.toString());
                     s1.saveToFile(s1.toString(), pw);
                 }
-            }
-            finally {
+            } finally {
                 sc.close();
             }
         }
