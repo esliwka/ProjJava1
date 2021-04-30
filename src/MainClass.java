@@ -13,7 +13,7 @@ public class MainClass {
         Scanner inputPath = new Scanner(System.in);
         String sfilePath = inputPath.nextLine();
         inputPath.close();
-        System.out.println(sfilePath);
+        // System.out.println(sfilePath);
         // input output files
         File fin;
         if (sfilePath == null || sfilePath.isEmpty()){
