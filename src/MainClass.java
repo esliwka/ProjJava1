@@ -17,12 +17,12 @@ public class MainClass {
         // input output files
         File fin;
         if (sfilePath == null || sfilePath.isEmpty()){
-            fin = new File("src\\input.dat");
+            fin = new File("input.dat");
         }
         else {
             fin = new File(sfilePath);
         }
-        File fout = new File("src\\output.dat");
+        File fout = new File("output.dat");
         // reading input file, executing calculations, writing output
         Solid s1;
         try (Scanner sc = new Scanner(fin)) {
