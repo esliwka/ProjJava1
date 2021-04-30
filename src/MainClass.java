@@ -6,9 +6,12 @@ import java.util.Scanner;
 public class MainClass {
 
     public static void main(String[] args) throws FileNotFoundException,ZeroException,NegativeException {
-
+        System.out.println("Podaj ścieżkę do pliku z danymi (Format: [typ_bryły] [wymiar1] *[wymiar2] *[wymiar3]). Wyniki zostaną zapisane do pliku output.dat.");
+        Scanner inputPath = new Scanner(System.in);
+        String sfilePath = inputPath.nextLine();
+        System.out.println(sfilePath);
         // input file
-        File fin = new File("src\\input.dat");
+        File fin = new File(sfilePath);
         File fout = new File("src\\output.dat");
         Solid s1;
         try (Scanner sc = new Scanner(fin)) {
