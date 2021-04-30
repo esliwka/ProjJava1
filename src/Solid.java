@@ -15,7 +15,9 @@ public abstract class Solid {
         this.name = name;
     }
 
+    // parsing line from input file depending on the type of solid
     public abstract void parseLine(Scanner sc) throws ZeroException, NegativeException;
+    // writing to output file
     public void saveToFile(String str, PrintWriter pw) throws FileNotFoundException{
         pw.println(str);
         pw.flush();

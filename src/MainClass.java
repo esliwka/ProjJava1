@@ -6,13 +6,24 @@ import java.util.Scanner;
 public class MainClass {
 
     public static void main(String[] args) throws FileNotFoundException,ZeroException,NegativeException {
-        System.out.println("Podaj ścieżkę do pliku z danymi (Format: [typ_bryły] [wymiar1] *[wymiar2] *[wymiar3]). Wyniki zostaną zapisane do pliku output.dat.");
+
+        // cli prompt
+        System.out.println("Podaj ścieżkę do pliku z danymi np. src\\danewejsciowe.dat\nWyniki zostaną zapisane do pliku output.dat.");
+        // reading input filepath from user
         Scanner inputPath = new Scanner(System.in);
         String sfilePath = inputPath.nextLine();
+        inputPath.close();
         System.out.println(sfilePath);
-        // input file
-        File fin = new File(sfilePath);
+        // input output files
+        File fin;
+        if (sfilePath == null || sfilePath.isEmpty()){
+            fin = new File("src\\input.dat");
+        }
+        else {
+            fin = new File(sfilePath);
+        }
         File fout = new File("src\\output.dat");
+        // reading input file, executing calculations, writing output
         Solid s1;
         try (Scanner sc = new Scanner(fin)) {
             PrintWriter pw = new PrintWriter(fout);
@@ -29,12 +40,14 @@ public class MainClass {
                     };
                     s1.parseLine(sc);
                     System.out.println(s1.toString());
+                    // writing to the output file
                     s1.saveToFile(s1.toString(), pw);
                 }
             } finally {
                 sc.close();
             }
         }
+        // catching exceptions
         catch(FileNotFoundException e) {
             System.out.println("Nie znaleziono pliku");
         }
@@ -44,12 +57,6 @@ public class MainClass {
         catch(NegativeException e) {
             System.out.println(e.getMessage());
         }
-
-        // Cone 3 arguments
-        // Cube 1
-        // Cuboid 3
-        // Cylinder 2
-        // Sphere 1
 
     }
 
