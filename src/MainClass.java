@@ -36,7 +36,7 @@ public class MainClass {
                         case "Cone" -> new Cone();
                         case "Cylinder" -> new Cylinder();
                         case "Sphere" -> new Sphere();
-                        default -> throw new IllegalStateException("Unexpected value: " + solidType);
+                        default -> throw new IllegalStateException("Nieprawidłowa nazwa: " + solidType);
                     };
                     s1.parseLine(sc);
                     System.out.println(s1.toString());
