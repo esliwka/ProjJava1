@@ -12,14 +12,17 @@ public class Cube extends Cuboid {
         setName("Szescian");
     }
     
-    public void parseLine(Scanner sc){
+    public void parseLine(Scanner sc) throws ZeroException, NegativeException{
         String line = sc.nextLine();
         StringTokenizer st = new StringTokenizer(line);
         String t1;
         t1 = st.nextToken();
-        setA(Double.parseDouble(t1));
-        setB(Double.parseDouble(t1));
-        setH(Double.parseDouble(t1));
+        double a = Double.parseDouble(t1);
+        setA(a);
+        setB(a);
+        setH(a);
+        if(a==0) throw new ZeroException();
+        if(a<0) throw new NegativeException();
     }
     
 }

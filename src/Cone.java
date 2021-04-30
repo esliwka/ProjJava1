@@ -18,7 +18,7 @@ public class Cone extends Solid {
         setName("Stozek");
     }
 
-    public void parseLine(Scanner sc){
+    public void parseLine(Scanner sc) throws ZeroException, NegativeException{
         String line = sc.nextLine();
         StringTokenizer st = new StringTokenizer(line);
         String t1,t2,t3;
@@ -28,6 +28,8 @@ public class Cone extends Solid {
         r = Double.parseDouble(t1);
         h = Double.parseDouble(t2);
         l = Double.parseDouble(t3);
+        if(r==0 || h==0 || l==0) throw new ZeroException();
+        if(r<0 || h<0 || l<0) throw new NegativeException();
     }
 
     @Override

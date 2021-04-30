@@ -16,7 +16,7 @@ public class Cylinder extends Solid {
         setName("Walec");
     }
 
-    public void parseLine(Scanner sc){
+    public void parseLine(Scanner sc) throws ZeroException, NegativeException{
         String line = sc.nextLine();
         StringTokenizer st = new StringTokenizer(line);
         String t1,t2;
@@ -24,6 +24,8 @@ public class Cylinder extends Solid {
         t2 = st.nextToken();
         r = Double.parseDouble(t1);
         h = Double.parseDouble(t2);
+        if(r==0 || h==0) throw new ZeroException();
+        if(r<0 || h<0) throw new NegativeException();
     }
 
     @Override
