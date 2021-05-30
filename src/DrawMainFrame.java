@@ -23,7 +23,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
     private ResultPanel resultPanel;
     private JTextField a = new JTextField(5), b = new JTextField(5), c = new JTextField(5);
     private JLabel result, aLabel, bLabel, cLabel;
-    private String[] solidList = {"Cuboid", "Cube", "Cone", "Sphere", "Cylinder"};
+    private String[] solidList = {"Cuboid", "Cube", "Cone", "Cylinder", "Sphere"};
     private JComboBox<String> cbSolidList;
     private Solid s1 = new Cuboid();
 
@@ -63,13 +63,6 @@ public class DrawMainFrame extends JFrame implements Runnable {
             DefaultComboBoxModel<String> dcbm = new DefaultComboBoxModel<>(solidList);
             cbSolidList = new JComboBox<String>(dcbm);
             add(cbSolidList);
-            
-            JCheckBox volumeCheckBox = new JCheckBox("Volume");
-            JCheckBox areaCheckBox = new JCheckBox("Area");
-            volumeCheckBox.setSelected(true);
-            areaCheckBox.setSelected(true);
-            add(volumeCheckBox);
-            add(areaCheckBox);
 
             aLabel = new JLabel("a = ");
             add(aLabel);
@@ -94,25 +87,51 @@ public class DrawMainFrame extends JFrame implements Runnable {
                             case "Cuboid":
                                 a.setVisible(true);
                                 aLabel.setText("a = ");
-                                aLabel.setVisible(true);
                                 b.setVisible(true);
                                 bLabel.setText("b = ");
-                                bLabel.setVisible(true);
                                 c.setVisible(true);
                                 cLabel.setText("h = ");
-                                cLabel.setVisible(true);
                                 s1 = new Cuboid();
                                 break;
 
                             case "Cube":
                                 a.setVisible(true);
                                 aLabel.setText("a = ");
-                                aLabel.setVisible(true);
                                 b.setVisible(false);
-                                bLabel.setVisible(false);
+                                bLabel.setText("");
                                 c.setVisible(false);
-                                cLabel.setVisible(false);
+                                cLabel.setText("");
                                 s1 = new Cube();
+                                break;
+
+                            case "Cone":
+                                a.setVisible(true);
+                                aLabel.setText("r = ");
+                                b.setVisible(true);
+                                bLabel.setText("h = ");
+                                c.setVisible(true);
+                                cLabel.setText("l = ");
+                                s1 = new Cone();
+                                break;
+
+                            case "Cylinder":
+                                a.setVisible(true);
+                                aLabel.setText("r = ");
+                                b.setVisible(true);
+                                bLabel.setText("h = ");
+                                c.setVisible(false);
+                                cLabel.setText("");
+                                s1 = new Cylinder();
+                                break;
+
+                            case "Sphere":
+                                a.setVisible(true);
+                                aLabel.setText("r = ");
+                                b.setVisible(false);
+                                bLabel.setText("");
+                                c.setVisible(false);
+                                cLabel.setText("");
+                                s1 = new Sphere();
                                 break;
                         
                             default:
@@ -136,7 +155,6 @@ public class DrawMainFrame extends JFrame implements Runnable {
 
             result = new JLabel("");
             add(result);
-            // result.setVisible(false);
         }
     }
 
@@ -187,10 +205,6 @@ public class DrawMainFrame extends JFrame implements Runnable {
                 public void actionPerformed(ActionEvent e) {
                     // calculate and display results in the results panel
                     // [fix]
-                    // if(a.getText().length()>0) {
-                    //     double val = Double.parseDouble(a.getText());
-                    //     result.setText(Double.toString(((UnitConversionAlgorithm)cbJednostki.getSelectedItem()).changeUnit(val)));
-                    // }
 
                     switch (s1.getName()) {
                         case "Prostopadloscian":
@@ -204,13 +218,43 @@ public class DrawMainFrame extends JFrame implements Runnable {
                             break;
 
                         case "Szescian":
-                            a.setVisible(true);
-                            aLabel.setText("a = ");
-                            aLabel.setVisible(true);
-                            b.setVisible(false);
-                            bLabel.setVisible(false);
-                            c.setVisible(false);
-                            cLabel.setVisible(false);
+                            if(a.getText().length() > 0) {
+                                s1 = new Cube(Double.parseDouble(a.getText()));
+                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                            }
+                            else {
+                                result.setText("Uzupelnij wszystkie pola.");
+                            }
+                            break;
+
+                        case "Stozek":
+                            if(a.getText().length() > 0 && b.getText().length() > 0 && c.getText().length() > 0) {
+                                s1 = new Cone(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
+                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                            }
+                            else {
+                                result.setText("Uzupelnij wszystkie pola.");
+                            }
+                            break;
+
+                        case "Walec":
+                            if(a.getText().length() > 0 && b.getText().length() > 0) {
+                                s1 = new Cylinder(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()));
+                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                            }
+                            else {
+                                result.setText("Uzupelnij wszystkie pola.");
+                            }
+                            break;
+
+                        case "Kula":
+                            if(a.getText().length() > 0) {
+                                s1 = new Sphere(Double.parseDouble(a.getText()));
+                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                            }
+                            else {
+                                result.setText("Uzupelnij wszystkie pola.");
+                            }
                             break;
                     
                         default:
