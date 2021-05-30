@@ -5,16 +5,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.logging.Filter;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileFilter;
 
 public class DrawMainFrame extends JFrame implements Runnable {
 
@@ -78,8 +85,6 @@ public class DrawMainFrame extends JFrame implements Runnable {
 
                 @Override
                 public void itemStateChanged(ItemEvent e) {
-
-                    // System.out.println(e.getItem() + " " + e.getStateChange());
 
                     if(e.getStateChange() == ItemEvent.SELECTED) {
 
@@ -162,25 +167,100 @@ public class DrawMainFrame extends JFrame implements Runnable {
     class ButtonPanel extends JPanel {
 
         private JFrame parentFrame;
-        private JButton calculateButton, clearButton, exportResultsButton;
+        private JButton calculateButton, clearButton, fileButton;
 
         public ButtonPanel(JFrame parentFrame) {
             this.parentFrame = parentFrame;
             setPreferredSize(new Dimension(parentFrame.getWidth(), parentFrame.getHeight()/10));
 
             // adding buttons
-            // export button - process input button instead?
-            // exportResultsButton = new JButton("Export results");
-            // exportResultsButton.addActionListener(new ActionListener(){
+            // file button - process input from file like in project 1
+            fileButton = new JButton("File");
+            fileButton.addActionListener(new ActionListener(){
 
-            //     @Override
-            //     public void actionPerformed(ActionEvent e) {
-            //         // check for results and export into a file or inform theres nothing to export
-            //         // [fill]
-            //     }
-                
-            // });
-            // add(exportResultsButton);
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    result.setText("");
+                    // choose a file with input like in project 1 and process it, output to file
+                    JFileChooser fc = new JFileChooser(new File("."));
+                    fc.setMultiSelectionEnabled(false);
+                    fc.setFileFilter(new FileFilter(){
+
+                        @Override
+                        public boolean accept(File f) {
+                            return f.getName().contains("dat") || f.getName().contains("txt");
+                        }
+
+                        @Override
+                        public String getDescription() {
+                            // TODO Auto-generated method stub
+                            return null;
+                        }
+                        
+                    });
+                    
+                    int result = fc.showOpenDialog(parentFrame);
+                    if(result == JFileChooser.APPROVE_OPTION) {
+
+                        // ############################################################
+                        // reading input filepath of the file pointed to by the user
+                        String sfilePath = fc.getSelectedFile().getAbsolutePath();
+                        // input output files
+                        File fin;
+                        if (sfilePath == null || sfilePath.isEmpty()){
+                            fin = new File("input.dat");
+                        }
+                        else {
+                            fin = new File(sfilePath);
+                        }
+                        File fout = new File("output.dat");
+                        // reading input file, executing calculations, writing output
+                        Solid s1;
+                        try (Scanner sc = new Scanner(fin)) {
+                            PrintWriter pw = new PrintWriter(fout);
+                            try {
+                                while (sc.hasNextLine()) {
+                                    String solidType = sc.next();
+                                    s1 = switch (solidType) {
+                                        case "Cuboid" -> new Cuboid();
+                                        case "Cube" -> new Cube();
+                                        case "Cone" -> new Cone();
+                                        case "Cylinder" -> new Cylinder();
+                                        case "Sphere" -> new Sphere();
+                                        default -> throw new IllegalStateException(solidType);
+                                    };
+                                    s1.parseLine(sc);
+                                    System.out.println(s1.toString());
+                                    // writing to the output file
+                                    s1.saveToFile(s1.toString(), pw);
+                                    DrawMainFrame.this.result.setText("Results saved to file \"output.dat\"");
+                                }
+                            } finally {
+                                sc.close();
+                            }
+                        }
+                        // catching exceptions
+                        catch(FileNotFoundException ex) {
+                            System.out.println("Nie znaleziono pliku");
+                            DrawMainFrame.this.result.setText("Nie znaleziono pliku");
+                        }
+                        catch(ZeroException ex) {
+                            System.out.println(ex.getMessage());
+                            DrawMainFrame.this.result.setText(ex.getMessage());
+                        }
+                        catch(NegativeException ex) {
+                            System.out.println(ex.getMessage());
+                            DrawMainFrame.this.result.setText(ex.getMessage());
+                        }
+                        catch(IllegalStateException ex) {
+                            System.out.println("Nieprawidłowa nazwa: " + ex.getMessage());
+                            DrawMainFrame.this.result.setText("Nieprawidłowa nazwa: " + ex.getMessage());
+                        }
+                        // ############################################################
+                    }
+                }
+            });
+            add(fileButton);
 
             // clear button
             clearButton = new JButton("Clear all");
@@ -204,7 +284,6 @@ public class DrawMainFrame extends JFrame implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // calculate and display results in the results panel
-                    // [fix]
 
                     switch (s1.getName()) {
                         case "Prostopadloscian":
