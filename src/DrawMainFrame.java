@@ -241,8 +241,8 @@ public class DrawMainFrame extends JFrame implements Runnable {
                         }
                         // catching exceptions
                         catch(FileNotFoundException ex) {
-                            System.out.println("Nie znaleziono pliku");
-                            DrawMainFrame.this.result.setText("Nie znaleziono pliku");
+                            System.out.println("File not found");
+                            DrawMainFrame.this.result.setText("File not found");
                         }
                         catch(ZeroException ex) {
                             System.out.println(ex.getMessage());
@@ -253,8 +253,8 @@ public class DrawMainFrame extends JFrame implements Runnable {
                             DrawMainFrame.this.result.setText(ex.getMessage());
                         }
                         catch(IllegalStateException ex) {
-                            System.out.println("Nieprawidłowa nazwa: " + ex.getMessage());
-                            DrawMainFrame.this.result.setText("Nieprawidłowa nazwa: " + ex.getMessage());
+                            System.out.println("Solid type not recognized: " + ex.getMessage());
+                            DrawMainFrame.this.result.setText("Solid type not recognized: " + ex.getMessage());
                         }
                         // ############################################################
                     }
