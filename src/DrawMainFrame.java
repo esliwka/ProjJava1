@@ -233,9 +233,9 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     System.out.println(s1.toString());
                                     // writing to the output file
                                     s1.saveToFile(s1.toString(), pw);
-                                    DrawMainFrame.this.result.setText("Results saved to file \"output.dat\"");
                                 }
                             } finally {
+                                DrawMainFrame.this.result.setText("Results saved to file \"output.dat\"");
                                 sc.close();
                             }
                         }
