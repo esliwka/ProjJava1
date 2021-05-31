@@ -288,8 +288,12 @@ public class DrawMainFrame extends JFrame implements Runnable {
                     switch (s1.getName()) {
                         case "Prostopadloscian":
                             if(a.getText().length() > 0 && b.getText().length() > 0 && c.getText().length() > 0) {
-                                s1 = new Cuboid(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
-                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                try {
+                                    s1 = new Cuboid(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
+                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                } catch (NumberFormatException numberFormatException) {
+                                    result.setText("Błędne dane");
+                                }
                             }
                             else {
                                 result.setText("Uzupelnij wszystkie pola.");
@@ -298,8 +302,12 @@ public class DrawMainFrame extends JFrame implements Runnable {
 
                         case "Szescian":
                             if(a.getText().length() > 0) {
-                                s1 = new Cube(Double.parseDouble(a.getText()));
-                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                try {
+                                    s1 = new Cube(Double.parseDouble(a.getText()));
+                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                } catch (NumberFormatException numberFormatException) {
+                                    result.setText("Błędne dane");
+                                }
                             }
                             else {
                                 result.setText("Uzupelnij wszystkie pola.");
@@ -308,8 +316,12 @@ public class DrawMainFrame extends JFrame implements Runnable {
 
                         case "Stozek":
                             if(a.getText().length() > 0 && b.getText().length() > 0 && c.getText().length() > 0) {
-                                s1 = new Cone(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
-                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                try {
+                                    s1 = new Cone(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
+                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                } catch (NumberFormatException numberFormatException) {
+                                    result.setText("Błędne dane");
+                                }
                             }
                             else {
                                 result.setText("Uzupelnij wszystkie pola.");
@@ -318,8 +330,12 @@ public class DrawMainFrame extends JFrame implements Runnable {
 
                         case "Walec":
                             if(a.getText().length() > 0 && b.getText().length() > 0) {
-                                s1 = new Cylinder(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()));
-                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                try {
+                                    s1 = new Cylinder(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()));
+                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                } catch (NumberFormatException numberFormatException) {
+                                    result.setText("Błędne dane");
+                                }
                             }
                             else {
                                 result.setText("Uzupelnij wszystkie pola.");
@@ -328,8 +344,12 @@ public class DrawMainFrame extends JFrame implements Runnable {
 
                         case "Kula":
                             if(a.getText().length() > 0) {
-                                s1 = new Sphere(Double.parseDouble(a.getText()));
-                            result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                try {
+                                    s1 = new Sphere(Double.parseDouble(a.getText()));
+                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
+                                } catch (NumberFormatException numberFormatException) {
+                                    result.setText("Błędne dane");
+                                }
                             }
                             else {
                                 result.setText("Uzupelnij wszystkie pola.");

@@ -18,7 +18,7 @@ public class Cone extends Solid {
         setName("Stozek");
     }
 
-    public void parseLine(Scanner sc) throws ZeroException, NegativeException{
+    public void parseLine(Scanner sc) throws ZeroException, NegativeException, NumberFormatException{
         String line = sc.nextLine();
         StringTokenizer st = new StringTokenizer(line);
         String t1,t2,t3;
