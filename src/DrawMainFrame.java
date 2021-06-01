@@ -292,11 +292,11 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     s1 = new Cuboid(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
                                     result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
                                 } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Błędne dane");
+                                    result.setText("Incorrect input");
                                 }
                             }
                             else {
-                                result.setText("Uzupelnij wszystkie pola.");
+                                result.setText("Input missing");
                             }
                             break;
 
@@ -306,11 +306,11 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     s1 = new Cube(Double.parseDouble(a.getText()));
                                     result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
                                 } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Błędne dane");
+                                    result.setText("Incorrect input");
                                 }
                             }
                             else {
-                                result.setText("Uzupelnij wszystkie pola.");
+                                result.setText("Input missing");
                             }
                             break;
 
@@ -320,11 +320,11 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     s1 = new Cone(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
                                     result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
                                 } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Błędne dane");
+                                    result.setText("Incorrect input");
                                 }
                             }
                             else {
-                                result.setText("Uzupelnij wszystkie pola.");
+                                result.setText("Input missing");
                             }
                             break;
 
@@ -334,11 +334,11 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     s1 = new Cylinder(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()));
                                     result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
                                 } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Błędne dane");
+                                    result.setText("Incorrect input");
                                 }
                             }
                             else {
-                                result.setText("Uzupelnij wszystkie pola.");
+                                result.setText("Input missing");
                             }
                             break;
 
@@ -348,11 +348,11 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     s1 = new Sphere(Double.parseDouble(a.getText()));
                                     result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
                                 } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Błędne dane");
+                                    result.setText("Incorrect input");
                                 }
                             }
                             else {
-                                result.setText("Uzupelnij wszystkie pola.");
+                                result.setText("Input missing");
                             }
                             break;
                     
