@@ -9,11 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.logging.Filter;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -81,15 +79,13 @@ public class DrawMainFrame extends JFrame implements Runnable {
             add(cLabel);
             add(c);
 
-            cbSolidList.addItemListener(new ItemListener(){
-
-                @Override
-                public void itemStateChanged(ItemEvent e) {
+            cbSolidList.addItemListener(
+                e -> {
 
                     if(e.getStateChange() == ItemEvent.SELECTED) {
 
                         switch (e.getItem().toString()) {
-                            case "Cuboid":
+                            case "Cuboid" -> {
                                 a.setVisible(true);
                                 aLabel.setText("a = ");
                                 b.setVisible(true);
@@ -97,9 +93,9 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                 c.setVisible(true);
                                 cLabel.setText("h = ");
                                 s1 = new Cuboid();
-                                break;
+                            }
 
-                            case "Cube":
+                            case "Cube" -> {
                                 a.setVisible(true);
                                 aLabel.setText("a = ");
                                 b.setVisible(false);
@@ -107,9 +103,9 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                 c.setVisible(false);
                                 cLabel.setText("");
                                 s1 = new Cube();
-                                break;
+                            }
 
-                            case "Cone":
+                            case "Cone" -> {
                                 a.setVisible(true);
                                 aLabel.setText("r = ");
                                 b.setVisible(true);
@@ -117,9 +113,9 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                 c.setVisible(true);
                                 cLabel.setText("l = ");
                                 s1 = new Cone();
-                                break;
+                            }
 
-                            case "Cylinder":
+                            case "Cylinder" -> {
                                 a.setVisible(true);
                                 aLabel.setText("r = ");
                                 b.setVisible(true);
@@ -127,9 +123,9 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                 c.setVisible(false);
                                 cLabel.setText("");
                                 s1 = new Cylinder();
-                                break;
+                            }
 
-                            case "Sphere":
+                            case "Sphere" -> {
                                 a.setVisible(true);
                                 aLabel.setText("r = ");
                                 b.setVisible(false);
@@ -137,14 +133,10 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                 c.setVisible(false);
                                 cLabel.setText("");
                                 s1 = new Sphere();
-                                break;
-                        
-                            default:
-                                break;
+                            }
                         }
                     }
-                }
-            });
+                });
 
         }
     }
@@ -176,10 +168,8 @@ public class DrawMainFrame extends JFrame implements Runnable {
             // adding buttons
             // file button - process input from file like in project 1
             fileButton = new JButton("File");
-            fileButton.addActionListener(new ActionListener(){
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
+            fileButton.addActionListener(
+                e -> {
                     result.setText("");
                     // choose a file with input like in project 1 and process it, output to file
                     JFileChooser fc = new JFileChooser(new File("."));
@@ -207,32 +197,21 @@ public class DrawMainFrame extends JFrame implements Runnable {
                         String sfilePath = fc.getSelectedFile().getAbsolutePath();
                         // input output files
                         File fin;
-                        if (sfilePath == null || sfilePath.isEmpty()){
+                        if (sfilePath == null || sfilePath.isEmpty())
                             fin = new File("input.dat");
-                        }
-                        else {
+                        else
                             fin = new File(sfilePath);
-                        }
                         File fout = new File("output.dat");
                         // reading input file, executing calculations, writing output
-                        Solid s1;
                         try (Scanner sc = new Scanner(fin)) {
                             PrintWriter pw = new PrintWriter(fout);
                             try {
                                 while (sc.hasNextLine()) {
-                                    String solidType = sc.next();
-                                    s1 = switch (solidType) {
-                                        case "Cuboid" -> new Cuboid();
-                                        case "Cube" -> new Cube();
-                                        case "Cone" -> new Cone();
-                                        case "Cylinder" -> new Cylinder();
-                                        case "Sphere" -> new Sphere();
-                                        default -> throw new IllegalStateException(solidType);
-                                    };
-                                    s1.parseLine(sc);
+                                    FileHandling fh = new FileHandling();
+                                    s1 = fh.parseLine(sc);
                                     System.out.println(s1.toString());
                                     // writing to the output file
-                                    s1.saveToFile(s1.toString(), pw);
+                                    fh.saveToFile(s1.toString(), pw);
                                 }
                             } finally {
                                 DrawMainFrame.this.result.setText("Results saved to file \"output.dat\"");
@@ -258,109 +237,30 @@ public class DrawMainFrame extends JFrame implements Runnable {
                         }
                         // ############################################################
                     }
-                }
-            });
+                });
             add(fileButton);
 
             // clear button
             clearButton = new JButton("Clear all");
-            clearButton.addActionListener(new ActionListener(){
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
+            clearButton.addActionListener(
+                e -> {
                     // clear input fields and result panel
                     a.setText("");
                     b.setText("");
                     c.setText("");
                     result.setText("");
-                }
-            });
+                });
             add(clearButton);
 
             // calculate button
             calculateButton = new JButton("Calculate");
-            calculateButton.addActionListener(new ActionListener(){
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
+            calculateButton.addActionListener(
+                e -> {
                     // calculate and display results in the results panel
-
-                    switch (s1.getName()) {
-                        case "Prostopadloscian":
-                            if(a.getText().length() > 0 && b.getText().length() > 0 && c.getText().length() > 0) {
-                                try {
-                                    s1 = new Cuboid(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
-                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
-                                } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Incorrect input");
-                                }
-                            }
-                            else {
-                                result.setText("Input missing");
-                            }
-                            break;
-
-                        case "Szescian":
-                            if(a.getText().length() > 0) {
-                                try {
-                                    s1 = new Cube(Double.parseDouble(a.getText()));
-                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
-                                } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Incorrect input");
-                                }
-                            }
-                            else {
-                                result.setText("Input missing");
-                            }
-                            break;
-
-                        case "Stozek":
-                            if(a.getText().length() > 0 && b.getText().length() > 0 && c.getText().length() > 0) {
-                                try {
-                                    s1 = new Cone(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()));
-                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
-                                } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Incorrect input");
-                                }
-                            }
-                            else {
-                                result.setText("Input missing");
-                            }
-                            break;
-
-                        case "Walec":
-                            if(a.getText().length() > 0 && b.getText().length() > 0) {
-                                try {
-                                    s1 = new Cylinder(Double.parseDouble(a.getText()), Double.parseDouble(b.getText()));
-                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
-                                } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Incorrect input");
-                                }
-                            }
-                            else {
-                                result.setText("Input missing");
-                            }
-                            break;
-
-                        case "Kula":
-                            if(a.getText().length() > 0) {
-                                try {
-                                    s1 = new Sphere(Double.parseDouble(a.getText()));
-                                    result.setText("V = " + s1.getVolume() + "  SA = " + s1.getArea());
-                                } catch (NumberFormatException numberFormatException) {
-                                    result.setText("Incorrect input");
-                                }
-                            }
-                            else {
-                                result.setText("Input missing");
-                            }
-                            break;
+                    InputParsing ip = new InputParsing();
+                    ip.screenCalculate(s1, a, b, c, result);
                     
-                        default:
-                            break;
-                    }
-                }
-            });
+                });
             add(calculateButton);
         }
 
