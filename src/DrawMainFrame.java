@@ -25,7 +25,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
     private JLabel result, aLabel, bLabel, cLabel;
     private String[] solidList = {"Cuboid", "Cube", "Cone", "Cylinder", "Sphere"};
     private JComboBox<String> cbSolidList;
-    private Solid s1 = new Cuboid();
+    private String s1 = "Cuboid";
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new DrawMainFrame("Solid calculator"));
@@ -87,7 +87,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     bLabel.setText("b = ");
                                     c.setVisible(true);
                                     cLabel.setText("h = ");
-                                    s1 = new Cuboid();
+                                    s1 = "Cuboid";
                                 }
 
                                 case "Cube" -> {
@@ -97,7 +97,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     bLabel.setText("");
                                     c.setVisible(false);
                                     cLabel.setText("");
-                                    s1 = new Cube();
+                                    s1 = "Cube";
                                 }
 
                                 case "Cone" -> {
@@ -107,7 +107,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     bLabel.setText("h = ");
                                     c.setVisible(true);
                                     cLabel.setText("l = ");
-                                    s1 = new Cone();
+                                    s1 = "Cone";
                                 }
 
                                 case "Cylinder" -> {
@@ -117,7 +117,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     bLabel.setText("h = ");
                                     c.setVisible(false);
                                     cLabel.setText("");
-                                    s1 = new Cylinder();
+                                    s1 = "Cylinder";
                                 }
 
                                 case "Sphere" -> {
@@ -127,7 +127,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                     bLabel.setText("");
                                     c.setVisible(false);
                                     cLabel.setText("");
-                                    s1 = new Sphere();
+                                    s1 = "Sphere";
                                 }
                             }
                         }
@@ -202,7 +202,7 @@ public class DrawMainFrame extends JFrame implements Runnable {
                                 PrintWriter pw = new PrintWriter(fout);
                                 final var r = new InputStreamReader(is, StandardCharsets.UTF_8);
                                 final var br = new BufferedReader(r);
-                                FileHandling fh = new FileHandling();
+                                InputProcessing fh = new InputProcessing();
                                 br.lines().map(fh::parseLine)
                                         .forEach(solid -> {
                                             fh.saveToFile(solid.toString(), pw);
@@ -248,9 +248,16 @@ public class DrawMainFrame extends JFrame implements Runnable {
             calculateButton.addActionListener(
                     e -> {
                         // calculate and display results in the results panel
-                        InputParsing ip = new InputParsing();
-                        ip.screenCalculate(s1, a, b, c, result);
-
+                        InputProcessing ip = new InputProcessing();
+                        try {
+                            ip.screenCalculate(s1, Double.parseDouble(a.getText()), Double.parseDouble(b.getText()), Double.parseDouble(c.getText()), result);
+                        } catch (NumberFormatException numberFormatException) {
+                            result.setText("Incorrect input");
+                        } catch (NegativeException negativeException) {
+                            result.setText("Input can't be negative");
+                        } catch (ZeroException zeroException) {
+                            result.setText("Input can't be 0");
+                        }
                     });
             add(calculateButton);
         }
